@@ -69,6 +69,25 @@ public class parsingTempCSV {
         return lowestHumidity;
     }
     
+    public CSVRecord lowestHumidityInManyFiles () {
+        
+        CSVRecord lowestSoFar = null;
+        DirectoryResource dr = new DirectoryResource();
+        
+        for (File f : dr.selectedFiles()){
+            FileResource fr = new FileResource(f);
+            CSVRecord current = lowestHumidityInFile(fr.getCSVParser());
+            
+            if(lowestSoFar == null) {
+             lowestSoFar = current;
+            }
+            else {
+             lowestSoFar = lowestOfTwoHumidities(current, lowestSoFar);
+            }
+        }
+        return lowestSoFar;
+    }
+    
     public CSVRecord smallestOfTwoTemps (CSVRecord currentRow, CSVRecord coldestSoFar) {
         if (coldestSoFar == null) {
             coldestSoFar = currentRow;
@@ -113,6 +132,21 @@ public class parsingTempCSV {
         return largestSoFar;
     }
     
+    public double averageTemperatureInFile (CSVParser parser) {
+        double runningTotal = 0.0;
+        int occurrences = 0;
+        
+        for (CSVRecord current : parser) {
+        double currentTemp = Double.parseDouble(current.get("TemperatureF"));
+        runningTotal += currentTemp;
+        occurrences ++;
+        }
+        
+        double average = runningTotal/occurrences;
+        
+        return average;
+    }
+    
     public void hotTest () {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
@@ -139,6 +173,13 @@ public class parsingTempCSV {
                                                     humid.get("DateUTC"));
     }
     
+    public void testLowestHumidityInManyFiles() {
+        CSVRecord humid = lowestHumidityInManyFiles();
+        
+        System.out.println("Lowest humidity was " + humid.get("Humidity") + " at " + 
+                                                    humid.get("DateUTC"));
+    }
+    
     public void testFileWithColdest () {
         String coldFilePath = fileWithColdestTemperature();
         FileResource fr = new FileResource(coldFilePath);
@@ -155,5 +196,12 @@ public class parsingTempCSV {
     public void testManyDays () {
         CSVRecord largest = hottestInManyDays();
         System.out.println(largest.get("TemperatureF"));
+    }
+    
+    public void testAverageTemperatureInFile() {
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        double average = averageTemperatureInFile(parser);
+        System.out.println("Average temperature in file is " + average);
     }
 }
