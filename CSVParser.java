@@ -1,3 +1,7 @@
+import edu.duke.*;
+import org.apache.commons.csv.*;
+import java.io.*;
+
 public class parsingTempCSV {
     
     public CSVRecord hottestHourInFile(CSVParser parser) {
@@ -147,6 +151,40 @@ public class parsingTempCSV {
         return average;
     }
     
+    public double averageTemperatureWithHighHumidityInFile (int value) {
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        
+        double average = 0.0;
+        int count = 0;
+        int humidCount = 0;
+        double runningTotal = 0.0;
+        boolean isThereHighHumidity = false;
+        
+        for (CSVRecord currentRow : parser) {
+            double humidity = Double.parseDouble(currentRow.get("Humidity"));
+            if (humidity >= value) {
+                count ++;
+                
+                runningTotal += Double.parseDouble(currentRow.get("TemperatureF"));
+            }
+            
+        }
+        
+        if (count != 0) {
+            average = runningTotal / count;
+        }
+        else {average = 0.0;}
+        
+        return average;
+    }
+
+
+
+    /////////////TESTS///////////////
+
+
+    
     public void hotTest () {
         FileResource fr = new FileResource();
         CSVParser parser = fr.getCSVParser();
@@ -203,5 +241,19 @@ public class parsingTempCSV {
         CSVParser parser = fr.getCSVParser();
         double average = averageTemperatureInFile(parser);
         System.out.println("Average temperature in file is " + average);
+    }
+    
+    public void testAverageTemperatureWithHighHumidityInFile () {
+        
+        double averageFunc = averageTemperatureWithHighHumidityInFile(80);
+        
+
+        if (averageFunc == 0.0) {
+        System.out.println("No temperatures with that humidity");
+        }
+        else {
+        System.out.println("Average temp when high humidity is " + averageFunc);
+        }
+        
     }
 }
