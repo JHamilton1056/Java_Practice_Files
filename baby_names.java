@@ -58,15 +58,16 @@ public class BabyBirths {
         FileResource fr = new FileResource();
    
         String babyName = "";
-          
+        int rankCounter = 0;
+        
         for (CSVRecord baby : fr.getCSVParser(false)) {
-            if(gender.equals(baby.get(1))){
+            if(gender.equals(baby.get(1)) && rankCounter < rank){
             String bn = baby.get(0);
+            rankCounter ++;
             babyName = bn;
             }
         }
-    
-    
+   
         return babyName;
     }
 
