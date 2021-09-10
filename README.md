@@ -12,3 +12,4 @@ word_lengths - Categorizes words based on their length.
 
 Caesar_cipher - Working on the fundamentals of arrays in java. Takes an input and encrypts the message based on a given key.
 
+Object_cipher - Like Caesar_cipher except creating the functionallity within an object. Working with the basics of constructors and fields. 
