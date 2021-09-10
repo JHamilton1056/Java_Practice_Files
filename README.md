@@ -13,3 +13,6 @@ word_lengths - Categorizes words based on their length.
 Caesar_cipher - Working on the fundamentals of arrays in java. Takes an input and encrypts the message based on a given key.
 
 Object_cipher - Like Caesar_cipher except creating the functionallity within an object. Working with the basics of constructors and fields. 
+
+word_frequency - Selects a file and stores the individual words in a string type ArrayList and the frequency of those words used are stored in a seperate ArrayList of integer type. Builds on the knowledge learned of creating objects and using constructors.
+
