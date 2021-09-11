@@ -16,3 +16,5 @@ Object_cipher - Like Caesar_cipher except creating the functionallity within an 
 
 word_frequency - Selects a file and stores the individual words in a string type ArrayList and the frequency of those words used are stored in a seperate ArrayList of integer type. Builds on the knowledge learned of creating objects and using constructors.
 
+Characters_In_Play - Builds off of word_frequency project; Was built to take in a file with text from one of Shakespeares plays. Then would read the file line by line to see which character had the most speaking parts.
+
